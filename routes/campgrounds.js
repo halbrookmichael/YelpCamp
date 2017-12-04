@@ -48,6 +48,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         }    
     });
 });
+});
 
 //SHOW - shows more info about one campground (needs to be last)
 router.get("/:id", function(req, res){
@@ -83,14 +84,16 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
     var location = data.results[0].formatted_address;
     var newData = {name: req.body.name, image: req.body.image, description: req.body.description, cost: req.body.cost, location: location, lat: lat, lng: lng};
     //find and update correct camground
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
+    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
         if(err){
-            res.redirect("/campgrounds");
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
-            //redirect somewhere (show page)
-            res.redirect("/campgrounds/" + req.params.id);
+            req.flash("success","Successfully Updated!");
+            res.redirect("/campgrounds/" + campground._id);
         }
     });
+  });
 });
 
 //DESTROY CAMPGROUND ROUTE
