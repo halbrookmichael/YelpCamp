@@ -28,6 +28,8 @@ app.use(flash());
 app.set("view engine", "ejs");
 //seedDB(); //seed the DB
 
+app.locals.moment = require('moment');
+
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "shhh",
