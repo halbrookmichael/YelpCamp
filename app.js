@@ -16,12 +16,9 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     authRoutes       = require("./routes/index");
 
-console.log(process.env.DATABASEURL);
-
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASEURL, {useMongoClient: true});
-//mongoose.connect("mongodb://michael:Brayden06@ds129066.mlab.com:29066/yelpcamp_mhalbrook", {useMongoClient: true});
-
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v12"; //backup url variable
+mongoose.connect(url, {useMongoClient: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));

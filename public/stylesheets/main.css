@@ -22,3 +22,9 @@
     width: 30%; 
     margin: 30px auto;
 }
+
+/*Google Maps*/
+#map {
+    height: 400px;
+    width: 100%;
+}
